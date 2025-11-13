@@ -1,52 +1,44 @@
 from fastapi import FastAPI
-from datetime import datetime
-from typing import Optional
-
-from fastapi.encoders import jsonable_encoder
-from model.model import Task, TaskList
-import model.taskman as taskman
-
-app = FastAPI()
-
-
-@app.get("/api/tasks")
-async def get_tasks():
-    """TODO
+from fastapi . encoders import jsonable_encoder
+from model . model import Task
+import model . taskman as taskman
+app = FastAPI ()
+@ app . get ( "/api/tasks" )
+async def get_tasks ():
+    """ 
+    TODO
     Fetch the list of all tasks
     """
-    return "TODO"
-
-
-@app.get("/api/tasks/{id}")
-async def get_task(id: int):
-    """TODO
+    return await taskman . get_tasks ()
+@ app . get ( "/api/tasks/ {id} " )
+async def get_task ( id : int ):
+    """ TODO
     Fetch the task by id
     """
-    return "TODO"
-
-
-@app.post("/api/tasks/create")
-async def create_task(task: Task):
-    """TODO
+    return await taskman . get_tasks ( id )
+@ app . post ( "/api/tasks/create" )
+async def create_task ( task : Task ):
+    """ 
+    TODO
     1. Create a new task and
     2. Return the details of task
     """
-    return "TODO"
-
-
-@app.put("/api/tasks/{id}/update")
-async def update_task(id: int, task: Task):
-    """TODO
+    id = await taskman . create_task ( task )
+    return await taskman . get_tasks ( id )
+@ app . put ( "/api/tasks/ {id} /update" )
+async def update_task ( id : int , task : Task ):
+    """ TODO
     1. Update the task by id
     2. Return the updated task
     """
-    return "TODO"
-
-
-@app.delete("/api/tasks/{id}/delete")
-async def delete_task(id: int):
-    """TODO
+    await taskman . update_task ( id , task )
+    return await taskman . get_tasks ( id )
+@ app . delete ( "/api/tasks/ {id} /delete" )
+async def delete_task ( id : int ):
+    """ TODO
     1. Delete the task by id
     2. Return a confirmation of deletion
     """
-    return "TODO"
+    id = await taskman . delete_task ( id )
+    response = { id : "Task successfully deleted" }
+    return jsonable_encoder ( response )
